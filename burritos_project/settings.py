@@ -89,17 +89,6 @@ DATABASES = {
     }
 }
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
-    ],
-    # Esto asegura que la mayoría de tus vistas estén protegidas por token, 
-    # excepto donde lo indiques explícitamente.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ]
-}
-
 AUTH_USER_MODEL = "core.Usuario"
 
 # ... (El resto de la configuración sin cambios)

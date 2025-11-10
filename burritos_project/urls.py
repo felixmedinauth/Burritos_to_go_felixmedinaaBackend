@@ -1,29 +1,30 @@
 """
 URL configuration for burritos_project project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
 from django.urls import path, include
 from django.shortcuts import redirect
+# Importar la vista necesaria para el login por token
+from rest_framework.authtoken.views import obtain_auth_token 
+
 
 def redirect_to_api(request):
+    """Redirige la raíz del sitio a la URL de la API."""
     return redirect('api/')
 
+
 urlpatterns = [
+    # 1. Redirección de la raíz del sitio
     path('', redirect_to_api, name='redirect-to-api'),
+
+    # 2. Panel de administración
     path('admin/', admin.site.urls),
-    path('api/', include('core.urls'))
+
+    # 3. Inclusión de las URLs de la aplicación 'core' (Tus endpoints principales)
+    path('api/', include('core.urls')),
+
+    # 4. RUTA DE LOGIN DE API (AUTENTICACIÓN POR TOKEN)
+    # Los clientes enviarán un POST con 'username' y 'password' a esta ruta
+    # y recibirán un token si las credenciales son válidas.
+    path('api/auth/token/', obtain_auth_token, name='api_token_auth'),
 ]
